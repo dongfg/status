@@ -17,6 +17,9 @@
   justify-content: space-between;
   position: relative;
 }
+.unknown {
+  background: var(--color-unknown);
+}
 .success {
   background: var(--color-success);
 }
@@ -34,6 +37,13 @@
   margin-bottom: 3px;
   overflow-wrap: break-word;
   padding: 16px;
+}
+
+.info {
+  margin-top: 4px;
+  font-size: 20px;
+  opacity: 0.7;
+  line-break: anywhere;
 }
 
 .content {

@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "type": "TEXT",
     "title": "只是文本展示",
     "rowSpan": 1,
@@ -8,22 +9,53 @@
     "params": {}
   },
   {
-    "type": "TEXT",
-    "title": "只是文本展示",
+    "id": 2,
+    "type": "PING",
+    "title": "PING localhost",
     "rowSpan": 1,
     "colSpan": 1,
-    "icon": "",
-    "params": {}
+    "icon": "icon-zhujizu",
+    "params": {
+      "host": "localhost"
+    }
   },
   {
-    "type": "TEXT",
-    "title": "只是文本展示",
+    "id": 3,
+    "type": "HTTP",
+    "title": "百度是否可访问",
     "rowSpan": 1,
     "colSpan": 1,
     "icon": "icon-zhujijiankong",
-    "params": {}
+    "params": {
+      "url": "https://www.baidu.com"
+    }
   },
   {
+    "id": 4,
+    "type": "HTTP-RAW",
+    "title": "我的IP地址",
+    "rowSpan": 1,
+    "colSpan": 1,
+    "icon": "",
+    "params": {
+      "url": "http://myip.ipip.net",
+      "regex": "[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}"
+    }
+  },
+  {
+    "id": 5,
+    "type": "HTTP-JSON",
+    "title": "项目构建人",
+    "rowSpan": 1,
+    "colSpan": 1,
+    "icon": "",
+    "params": {
+      "url": "https://api.yesdididi.com/base-api/actuator/info",
+      "path": "$.git.build.user.name"
+    }
+  },
+  {
+    "id": 6,
     "type": "TEXT",
     "title": "只是文本展示",
     "rowSpan": 1,
@@ -32,6 +64,7 @@
     "params": {}
   },
   {
+    "id": 7,
     "type": "TEXT",
     "title": "只是文本展示",
     "rowSpan": 1,
@@ -40,6 +73,36 @@
     "params": {}
   },
   {
+    "id": 8,
+    "type": "TEXT",
+    "title": "只是文本展示",
+    "rowSpan": 1,
+    "colSpan": 2,
+    "icon": "",
+    "params": {}
+  },
+  {
+    "id": 9,
+    "type": "TEXT",
+    "title": "只是文本展示",
+    "rowSpan": 2,
+    "colSpan": 1,
+    "icon": "",
+    "params": {}
+  },
+  {
+    "id": 10,
+    "type": "PING",
+    "title": "PING 127.0.0.1",
+    "rowSpan": 1,
+    "colSpan": 1,
+    "icon": "",
+    "params": {
+      "host": "127.0.0.1"
+    }
+  },
+  {
+    "id": 11,
     "type": "TEXT",
     "title": "只是文本展示",
     "rowSpan": 1,
@@ -48,54 +111,18 @@
     "params": {}
   },
   {
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "",
-    "params": {}
-  },
-  {
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "",
-    "params": {}
-  },
-  {
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "",
-    "params": {}
-  },
-  {
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "",
-    "params": {}
-  },
-  {
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "",
-    "params": {}
-  },
-  {
-    "type": "TEXT",
-    "title": "只是文本展示",
+    "id": 12,
+    "type": "PING",
+    "title": "PING nas",
     "rowSpan": 1,
     "colSpan": 1,
     "icon": "icon-luyou",
-    "params": {}
+    "params": {
+      "host": "kuaiche-nas.myds.me"
+    }
   },
   {
+    "id": 13,
     "type": "TEXT",
     "title": "只是文本展示",
     "rowSpan": 1,
@@ -104,6 +131,7 @@
     "params": {}
   },
   {
+    "id": 14,
     "type": "TEXT",
     "title": "只是文本展示",
     "rowSpan": 1,
