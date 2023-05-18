@@ -21,7 +21,7 @@
   },
   {
     "id": 3,
-    "type": "HTTP",
+    "type": "HTTP-STATUS",
     "title": "百度是否可访问",
     "rowSpan": 1,
     "colSpan": 1,
@@ -65,21 +65,25 @@
   },
   {
     "id": 7,
-    "type": "TEXT",
-    "title": "只是文本展示",
+    "type": "SSL-CERT",
+    "title": "dongfg.com证书过期时间",
     "rowSpan": 1,
     "colSpan": 1,
     "icon": "",
-    "params": {}
+    "params": {
+      "host": "dongfg.com"
+    }
   },
   {
     "id": 8,
-    "type": "TEXT",
-    "title": "只是文本展示",
+    "type": "SSL-CERT",
+    "title": "证书已过期",
     "rowSpan": 1,
     "colSpan": 2,
     "icon": "",
-    "params": {}
+    "params": {
+      "host": "expired.badssl.com"
+    }
   },
   {
     "id": 9,

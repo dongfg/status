@@ -2,9 +2,10 @@ type MonitorType =
   | "GROUP"
   | "TEXT"
   | "PING"
-  | "HTTP"
+  | "HTTP-STATUS"
   | "HTTP-RAW"
   | "HTTP-JSON"
+  | "SSL-CERT"
   | "CODING";
 
 export enum MonitorStatus {
@@ -35,6 +36,7 @@ export type Status = {
   result?: string;
   message?: string;
   children?: Status[] | null;
+  time?: string;
   rowSpan?: number;
   colSpan?: number;
 };

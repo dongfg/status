@@ -5,16 +5,34 @@ import { promises as fs } from "fs";
 const HISTORY_SIZE = 5;
 const store = new NodeCache();
 
-export default store;
+const hashCode = (input: string) => {
+  let hash = 0,
+    i,
+    chr;
+  if (input.length === 0) return hash;
+  for (i = 0; i < input.length; i++) {
+    chr = input.charCodeAt(i);
+    hash = (hash << 5) - hash + chr;
+    hash |= 0;
+  }
+  return hash;
+};
 
 export const loadConfig = async () => {
   const data = await fs.readFile(process.cwd() + "/config.json", "utf8");
   const config = JSON.parse(data) as Config[];
   store.set("config", config);
+  const stats = await fs.stat(process.cwd() + "/config.json");
+  store.set("mtimeMs", stats.mtimeMs);
   return config;
 };
 
-export const getConfig = () => {
+export const getConfig = async () => {
+  const stats = await fs.stat(process.cwd() + "/config.json");
+  if (store.has("mtimeMs") && store.get<number>("mtimeMs") !== stats.mtimeMs) {
+    // 数据修改后不返回缓存数据
+    return undefined;
+  }
   return store.get<Config[]>("config");
 };
 
@@ -33,3 +51,5 @@ export const saveStatus = (id: number, status: Status) => {
   store.set(key, values);
   return values;
 };
+
+export default store;

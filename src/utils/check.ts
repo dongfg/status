@@ -1,7 +1,11 @@
 import { MonitorStatus, Config, Status } from "@/typings";
 import { saveStatus } from "./store";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 import icmp from "icmp";
 import { JSONPath } from "jsonpath-plus";
+import tls from "tls";
 
 const build = (config: Config): Status => {
   return {
@@ -41,6 +45,7 @@ const determine = (history: Status[], status: Status) => {
 const save = (config: Config, status: Status) => {
   const history = saveStatus(config.id, status);
   determine(history, status);
+  status.time = new Date().toISOString();
 };
 
 /**
@@ -76,7 +81,7 @@ export const pingCheck = (config: Config): Promise<Status> => {
 /**
  * HTTP 状态码
  */
-export const httpCheck = (config: Config): Promise<Status> => {
+export const httpStatusCheck = (config: Config): Promise<Status> => {
   return check(config, async (status) => {
     try {
       const res = await fetch(config.params!.url);
@@ -134,6 +139,43 @@ export const httpJsonCheck = (config: Config): Promise<Status> => {
       }
     } catch (err) {
       status.status = MonitorStatus.Failed;
+    }
+  });
+};
+
+/**
+ * SSL 证书过期时间
+ */
+export const sslCertCheck = (config: Config): Promise<Status> => {
+  return check(config, async (status) => {
+    try {
+      const res = await new Promise<string>(function (resolve, reject) {
+        const client = tls.connect(
+          {
+            host: config.params!.host,
+            port: config.params!.port || 443,
+          },
+          () => {
+            const cert = client.getPeerCertificate(true);
+            if (cert) {
+              resolve(dayjs(cert.valid_to).fromNow());
+            }
+          }
+        );
+        client.on("error", (sc: any) => {
+          reject(sc.code);
+        });
+      });
+      status.result = res;
+      status.status = MonitorStatus.Success;
+    } catch (err) {
+      if (err === "CERT_HAS_EXPIRED") {
+        status.result = "EXPIRED";
+        status.status = MonitorStatus.Failed;
+      } else {
+        status.result = "UNKNOWN";
+        status.status = MonitorStatus.Warning;
+      }
     }
   });
 };
