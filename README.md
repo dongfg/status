@@ -3,7 +3,7 @@
 ## 配置示例
 <details></summary>配置示例</summary>
 
-```json
+```jsonc
 [
   {
     "id": 1,
@@ -168,67 +168,69 @@
 
 ### TEXT
 > 用于文本展示
+> ```jsonc
+{
+    "type": "TEXT",
+    "params": {
+        "text": "" // 文本内容
+    }
+}
 
 ### PING
 > 展示延迟
-```json
+```jsonc
 {
-    ...
+    "type": "PING",
     "params": {
         "host": "" // 主机地址
     }
-    ...
 }
 ```
 
 #### HTTP-STATUS
 > 根据返回的 http 状态码判断地址是否可用
 > 状态码 [200, 400) 为成功，其他为失败
-```json
+```jsonc
 {
-    ...
+    "type": "HTTP-STATUS",
     "params": {
         "url": "" // 请求网址
     }
-    ...
 }
 ```
 #### HTTP-RAW
 > 展示原始返回，支持通过 regex 解析返回
-```json
+```jsonc
 {
-    ...
+    "type": "HTTP-RAW",
     "params": {
         "url": "", // 请求网址
         "regex": "" // 可选，通过regex解析返回
     }
-    ...
 }
 ```
 #### HTTP-JSON
 > 展示JSON返回，支持通过 jsonpath 解析返回
 > 参考 https://github.com/JSONPath-Plus/JSONPath
 > 参考 https://jsonpath-plus.github.io/JSONPath/demo/
-```json
+```jsonc
 {
-    ...
+    "type": "HTTP-JSON",
     "params": {
         "url": "", // 请求网址,
         "path": "" // 通过jsonpath解析返回
     }
-    ...
 }
 ```
 
 #### SSL-CERT
 > 展示https证书是否过期
-```json
+```jsonc
 {
-    ...
+    "type": "SSL-CERT",
     "params": {
         "host": "", // 主机地址
         "port": 443 // https 端口, 默认 443
     }
-    ...
 }
 ```

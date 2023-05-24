@@ -2,6 +2,7 @@ import { Config } from "@/typings";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getConfig, loadConfig } from "@/utils/store";
 import {
+  textCheck,
   pingCheck,
   httpStatusCheck,
   httpRawCheck,
@@ -14,7 +15,7 @@ const check = async (config: Config) => {
     case "GROUP":
       break;
     case "TEXT":
-      break;
+      return textCheck(config);
     case "PING":
       return pingCheck(config);
     case "HTTP-STATUS":

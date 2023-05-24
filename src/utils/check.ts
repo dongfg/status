@@ -62,6 +62,20 @@ const check = async (
 };
 
 /**
+ * TEXT
+ */
+export const textCheck = (config: Config): Promise<Status> => {
+  return check(config, async (status) => {
+    try {
+      status.result = config.params?.text || "";
+      status.status = MonitorStatus.Success;
+    } catch (err) {
+      status.status = MonitorStatus.Failed;
+    }
+  });
+};
+
+/**
  * PING
  */
 export const pingCheck = (config: Config): Promise<Status> => {
