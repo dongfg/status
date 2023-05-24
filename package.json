@@ -16,7 +16,6 @@
     "dayjs": "^1.11.7",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
-    "icmp": "^2.0.1",
     "jsonpath-plus": "^7.2.0",
     "next": "13.4.2",
     "node-cache": "^5.1.2",

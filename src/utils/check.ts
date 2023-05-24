@@ -3,7 +3,6 @@ import { saveStatus } from "./store";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
-import icmp from "icmp";
 import { JSONPath } from "jsonpath-plus";
 import tls from "tls";
 
@@ -82,7 +81,6 @@ export const pingCheck = (config: Config): Promise<Status> => {
   return check(config, async (status) => {
     const start = new Date().getMilliseconds();
     try {
-      await icmp.ping(config.params!.host);
       const delay = new Date().getMilliseconds() - start;
       status.result = `${delay} ms`;
       status.status = MonitorStatus.Success;
