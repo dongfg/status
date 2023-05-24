@@ -168,7 +168,7 @@
 
 ### TEXT
 > 用于文本展示
-> ```jsonc
+```jsonc
 {
     "type": "TEXT",
     "params": {
