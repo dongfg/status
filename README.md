@@ -212,8 +212,8 @@
 ```
 #### HTTP-JSON
 > 展示JSON返回，支持通过 jsonpath 解析返回
-> 参考 https://github.com/JSONPath-Plus/JSONPath
-> 参考 https://jsonpath-plus.github.io/JSONPath/demo/
+> - 参考 https://github.com/JSONPath-Plus/JSONPath
+> - 参考 https://jsonpath-plus.github.io/JSONPath/demo/
 ```jsonc
 {
     "type": "HTTP-JSON",
