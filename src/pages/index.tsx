@@ -18,7 +18,7 @@ export default function Home({ data }: { data: Status[] }) {
 }
 
 export async function getStaticProps() {
-  const data = await fs.readFile(process.cwd() + "/config.json", "utf8");
+  const data = await fs.readFile(process.cwd() + "/public/config.json", "utf8");
   const config = JSON.parse(data) as Config[];
   const initStatus = config.map<Status>((c) => {
     return {
