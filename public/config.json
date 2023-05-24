@@ -10,13 +10,13 @@
   },
   {
     "id": 2,
-    "type": "PING",
-    "title": "PING localhost",
+    "type": "TEXT",
+    "title": "只是文本展示",
     "rowSpan": 1,
     "colSpan": 1,
     "icon": "icon-zhujizu",
     "params": {
-      "host": "localhost"
+      "text": "只是文本展示"
     }
   },
   {
@@ -96,13 +96,13 @@
   },
   {
     "id": 10,
-    "type": "PING",
-    "title": "PING 127.0.0.1",
+    "type": "TEXT",
+    "title": "只是文本展示",
     "rowSpan": 1,
     "colSpan": 1,
     "icon": "",
     "params": {
-      "host": "127.0.0.1"
+      "text": "只是文本展示"
     }
   },
   {
@@ -116,13 +116,13 @@
   },
   {
     "id": 12,
-    "type": "PING",
-    "title": "PING nas",
+    "type": "TEXT",
+    "title": "只是文本展示",
     "rowSpan": 1,
     "colSpan": 1,
     "icon": "icon-luyou",
     "params": {
-      "host": "kuaiche-nas.myds.me"
+      "text": "k只是文本展示"
     }
   },
   {
