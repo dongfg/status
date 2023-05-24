@@ -1,6 +1,7 @@
 import { Config, Status } from "@/typings";
 import NodeCache from "node-cache";
 import { promises as fs } from "fs";
+import path from "path";
 
 const HISTORY_SIZE = 5;
 const store = new NodeCache();
@@ -19,16 +20,19 @@ const hashCode = (input: string) => {
 };
 
 export const loadConfig = async () => {
-  const data = await fs.readFile("../config.json", "utf8");
+  const data = await fs.readFile(
+    path.resolve("./public") + "/config.json",
+    "utf8"
+  );
   const config = JSON.parse(data) as Config[];
   store.set("config", config);
-  const stats = await fs.stat("../config.json");
+  const stats = await fs.stat(path.resolve("./public") + "/config.json");
   store.set("mtimeMs", stats.mtimeMs);
   return config;
 };
 
 export const getConfig = async () => {
-  const stats = await fs.stat("../config.json");
+  const stats = await fs.stat(path.resolve("./public") + "/config.json");
   if (store.has("mtimeMs") && store.get<number>("mtimeMs") !== stats.mtimeMs) {
     // 数据修改后不返回缓存数据
     return undefined;
