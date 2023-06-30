@@ -16,7 +16,7 @@ export enum MonitorStatus {
 }
 
 export type Config = {
-  id: number;
+  id: string;
   type: MonitorType;
   title: string;
   icon?: string;
@@ -27,7 +27,7 @@ export type Config = {
 };
 
 export type Status = {
-  id: number;
+  id: string;
   type: MonitorType;
   status: MonitorStatus;
   title: string;

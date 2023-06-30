@@ -90,6 +90,35 @@
   background: #fff;
 }
 
+.group {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+  padding: 0 16px;
+}
+.group .item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-style: inset;
+  border: solid #000 1px;
+  border-radius: 4px;
+}
+.group .header {
+  font-size: 24px;
+  font-weight: normal;
+  text-align: left;
+  padding: 8px;
+}
+
+.group .content {
+  font-size: 24px;
+  text-align: right;
+  flex: unset;
+  padding: 8px;
+}
+
 @media screen and (max-width: 512px) {
   .main {
     grid-template-columns: repeat(1, 1fr);

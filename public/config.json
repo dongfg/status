@@ -1,39 +1,30 @@
 [
   {
-    "id": 1,
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "icon-zhujizu",
-    "params": {}
-  },
-  {
-    "id": 2,
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "icon-zhujizu",
-    "params": {
-      "text": "只是文本展示"
-    }
-  },
-  {
-    "id": 3,
+    "id": "statusOfMain",
     "type": "HTTP-STATUS",
-    "title": "百度是否可访问",
+    "title": "主站可访问性",
     "rowSpan": 1,
     "colSpan": 1,
     "icon": "icon-zhujijiankong",
     "params": {
-      "url": "https://www.baidu.com"
+      "url": "https://dongfg.com"
     }
   },
   {
-    "id": 4,
+    "id": "sslOfMain",
+    "type": "SSL-CERT",
+    "title": "主站证书过期",
+    "rowSpan": 1,
+    "colSpan": 1,
+    "icon": "LockOutlined",
+    "params": {
+      "host": "dongfg.com"
+    }
+  },
+  {
+    "id": "ipOfSelf",
     "type": "HTTP-RAW",
-    "title": "我的IP地址",
+    "title": "当前服务地址",
     "rowSpan": 1,
     "colSpan": 1,
     "icon": "",
@@ -43,15 +34,15 @@
     }
   },
   {
-    "id": 5,
+    "id": "verOfSelf",
     "type": "HTTP-JSON",
-    "title": "项目构建人",
+    "title": "当前服务版本",
     "rowSpan": 1,
     "colSpan": 1,
     "icon": "",
     "params": {
-      "url": "https://api.yesdididi.com/base-api/actuator/info",
-      "path": "$.git.build.user.name"
+      "url": "https://api.github.com/repos/dongfg/gocronexpr/releases/latest",
+      "path": "$.tag_name"
     }
   },
   {
@@ -95,17 +86,6 @@
     "params": {}
   },
   {
-    "id": 10,
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "",
-    "params": {
-      "text": "只是文本展示"
-    }
-  },
-  {
     "id": 11,
     "type": "TEXT",
     "title": "只是文本展示",
@@ -132,15 +112,6 @@
     "rowSpan": 1,
     "colSpan": 1,
     "icon": "icon-wangluo",
-    "params": {}
-  },
-  {
-    "id": 14,
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "",
     "params": {}
   }
 ]

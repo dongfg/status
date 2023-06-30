@@ -1,5 +1,6 @@
 import { MonitorStatus, Config, Status } from "@/typings";
 import { promises as fs } from "fs";
+import Group from "@/components/Group";
 import Block from "@/components/Block";
 import TextBlock from "@/components/TextBlock";
 import styles from "@/styles/index.module.css";
@@ -8,6 +9,9 @@ export default function Home({ data }: { data: Status[] }) {
   return (
     <main className={styles.main}>
       {data?.map((s, i) => {
+        if (s.type === "GROUP") {
+          return <Group key={i} data={s} />;
+        }
         if (s.type === "TEXT") {
           return <TextBlock key={i} data={s} />;
         }

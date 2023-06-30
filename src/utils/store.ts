@@ -40,7 +40,7 @@ export const getConfig = async () => {
   return store.get<Config[]>("config");
 };
 
-export const saveStatus = (id: number, status: Status) => {
+export const saveStatus = (id: string, status: Status) => {
   const key = `id_${id}`;
   let values: Status[];
   if (store.has(key)) {

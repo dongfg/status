@@ -20,7 +20,7 @@ export default function TextBlock({ data }: { data: Status }) {
       </div>
       <div className={styles.content}>{data.result || ""}</div>
       <div className={styles.footer}>
-        <Icon type={data.icon || "icon-wangluo"} style={{ fontSize: "32px" }} />
+        <Icon name={data.icon || "icon-wangluo"} />
         {data.type === "CODING" ? `checking` : ``}
       </div>
       {data.type === "CODING" ? (

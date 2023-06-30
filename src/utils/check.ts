@@ -50,7 +50,7 @@ const save = (config: Config, status: Status) => {
 /**
  * Template
  */
-const check = async (
+const run = async (
   config: Config,
   callback: (status: Status) => Promise<void>
 ): Promise<Status> => {
@@ -60,11 +60,53 @@ const check = async (
   return status;
 };
 
+export const check = async (config: Config) => {
+  switch (config.type) {
+    case "GROUP":
+      return groupCheck(config);
+    case "TEXT":
+      return textCheck(config);
+    case "PING":
+      return pingCheck(config);
+    case "HTTP-STATUS":
+      return httpStatusCheck(config);
+    case "HTTP-RAW":
+      return httpRawCheck(config);
+    case "HTTP-JSON":
+      return httpJsonCheck(config);
+    case "SSL-CERT":
+      return sslCertCheck(config);
+    case "CODING":
+    default:
+      return textCheck(config);
+  }
+};
+
+/**
+ * GROUP
+ */
+export const groupCheck = (config: Config): Promise<Status> => {
+  return run(config, async (status) => {
+    try {
+      const groupStatus: Status[] = [];
+      for (const child of (config.children || []).filter(
+        (child) => child.type !== "GROUP"
+      )) {
+        const status = await check(child);
+        groupStatus.push(status);
+      }
+      status.children = groupStatus;
+    } catch (err) {
+      status.status = MonitorStatus.Failed;
+    }
+  });
+};
+
 /**
  * TEXT
  */
 export const textCheck = (config: Config): Promise<Status> => {
-  return check(config, async (status) => {
+  return run(config, async (status) => {
     try {
       status.result = config.params?.text || "";
       status.status = MonitorStatus.Success;
@@ -78,7 +120,7 @@ export const textCheck = (config: Config): Promise<Status> => {
  * PING
  */
 export const pingCheck = (config: Config): Promise<Status> => {
-  return check(config, async (status) => {
+  return run(config, async (status) => {
     const start = new Date().getMilliseconds();
     try {
       const delay = new Date().getMilliseconds() - start;
@@ -94,7 +136,7 @@ export const pingCheck = (config: Config): Promise<Status> => {
  * HTTP 状态码
  */
 export const httpStatusCheck = (config: Config): Promise<Status> => {
-  return check(config, async (status) => {
+  return run(config, async (status) => {
     try {
       const res = await fetch(config.params!.url);
       status.result = `${res.status} ${res.statusText}`;
@@ -113,7 +155,7 @@ export const httpStatusCheck = (config: Config): Promise<Status> => {
  * HTTP 原始返回
  */
 export const httpRawCheck = (config: Config): Promise<Status> => {
-  return check(config, async (status) => {
+  return run(config, async (status) => {
     try {
       const res = await fetch(config.params!.url);
       status.result = await res.text();
@@ -139,7 +181,7 @@ export const httpRawCheck = (config: Config): Promise<Status> => {
  * https://jsonpath-plus.github.io/JSONPath/demo/
  */
 export const httpJsonCheck = (config: Config): Promise<Status> => {
-  return check(config, async (status) => {
+  return run(config, async (status) => {
     try {
       const res = await fetch(config.params!.url);
       const json = await res.json();
@@ -148,9 +190,11 @@ export const httpJsonCheck = (config: Config): Promise<Status> => {
         status.status = MonitorStatus.Success;
       } else {
         status.status = MonitorStatus.Failed;
+        status.result = res.statusText;
       }
     } catch (err) {
       status.status = MonitorStatus.Failed;
+      status.result = (err as any).toString();
     }
   });
 };
@@ -159,7 +203,7 @@ export const httpJsonCheck = (config: Config): Promise<Status> => {
  * SSL 证书过期时间
  */
 export const sslCertCheck = (config: Config): Promise<Status> => {
-  return check(config, async (status) => {
+  return run(config, async (status) => {
     try {
       const res = await new Promise<string>(function (resolve, reject) {
         const client = tls.connect(

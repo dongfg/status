@@ -15,29 +15,26 @@ export default function Block({ data: init }: { data: Status }) {
   }`;
   return (
     <div
-      key={data.title}
+      key={data.id}
       className={`${styles.block} ${styles[data.status]}`}
       style={{
         gridArea,
       }}
     >
-      <div className={styles.header}>
-        <div className={styles.title}>{data.title}</div>
-        {data.info ? <div className={styles.info}>{data.info}</div> : null}
-      </div>
-      <div className={styles.content}>{data.result || ""}</div>
-      <div className={styles.footer}>
-        <Icon name={data.icon || "icon-wangluo"} />
-        {data.type === "CODING" ? `checking` : ``}
-      </div>
-      {data.type === "CODING" ? (
-        <div className={styles.progress}>
-          <div
-            className={styles.processBar}
-            style={{ transform: `translateX(-0%)` }}
-          ></div>
+      {data.title ? (
+        <div className={styles.header}>
+          <div className={styles.title}>{data.title}</div>
+          {data.info ? <div className={styles.info}>{data.info}</div> : null}
         </div>
       ) : null}
+      <div className={styles.group}>
+        {(data.children || []).map(({ id, title, result, status }) => (
+          <div className={`${styles.item} ${styles[status]}`} key={id}>
+            <div className={styles.header}>{title}</div>
+            <div className={styles.content}>{result}</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
