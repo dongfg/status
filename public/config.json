@@ -46,72 +46,47 @@
     }
   },
   {
-    "id": 6,
-    "type": "TEXT",
-    "title": "已部署",
+    "id": "statusOf-func-doc",
+    "type": "HTTP-STATUS",
+    "title": "Serverless文档",
     "rowSpan": 1,
     "colSpan": 1,
-    "icon": "",
-    "params": {}
-  },
-  {
-    "id": 7,
-    "type": "SSL-CERT",
-    "title": "dongfg.com证书过期时间",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "",
+    "icon": "icon-zhujijiankong",
     "params": {
-      "host": "dongfg.com"
+      "url": "https://func.dongfg.com"
     }
   },
   {
-    "id": 8,
-    "type": "SSL-CERT",
-    "title": "证书已过期",
+    "id": "statusOf-func-iptv",
+    "type": "HTTP-STATUS",
+    "title": "IPTV 服务",
     "rowSpan": 1,
-    "colSpan": 2,
-    "icon": "",
+    "colSpan": 1,
+    "icon": "icon-zhujijiankong",
     "params": {
-      "host": "expired.badssl.com"
+      "url": "https://iptv.func.dongfg.com/ping"
     }
   },
   {
-    "id": 9,
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 2,
-    "colSpan": 1,
-    "icon": "",
-    "params": {}
-  },
-  {
-    "id": 11,
-    "type": "TEXT",
-    "title": "只是文本展示",
+    "id": "statusOf-func-ebill",
+    "type": "HTTP-STATUS",
+    "title": "电子账单服务",
     "rowSpan": 1,
     "colSpan": 1,
-    "icon": "",
-    "params": {}
-  },
-  {
-    "id": 12,
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "icon-luyou",
+    "icon": "icon-zhujijiankong",
     "params": {
-      "text": "k只是文本展示"
+      "url": "https://ebill.func.dongfg.com/ping"
     }
   },
   {
-    "id": 13,
-    "type": "TEXT",
-    "title": "只是文本展示",
+    "id": "statusOf-func-crawler",
+    "type": "HTTP-STATUS",
+    "title": "爬虫服务",
     "rowSpan": 1,
     "colSpan": 1,
-    "icon": "icon-wangluo",
-    "params": {}
+    "icon": "icon-zhujijiankong",
+    "params": {
+      "url": "https://crawler.func.dongfg.com/ping"
+    }
   }
 ]
