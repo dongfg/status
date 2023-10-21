@@ -1,226 +1,73 @@
-状态面板
-----
-## 配置示例
-<details></summary>配置示例</summary>
+# 状态页
 
-```jsonc
-[
-  {
-    "id": 1,
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "icon-zhujizu",
-    "params": {}
-  },
-  {
-    "id": 2,
-    "type": "PING",
-    "title": "PING localhost",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "icon-zhujizu",
-    "params": {
-      "host": "localhost"
-    }
-  },
-  {
-    "id": 3,
-    "type": "HTTP-STATUS",
-    "title": "百度是否可访问",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "icon-zhujijiankong",
-    "params": {
-      "url": "https://www.baidu.com"
-    }
-  },
-  {
-    "id": 4,
-    "type": "HTTP-RAW",
-    "title": "我的IP地址",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "",
-    "params": {
-      "url": "http://myip.ipip.net",
-      "regex": "[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}"
-    }
-  },
-  {
-    "id": 5,
-    "type": "HTTP-JSON",
-    "title": "项目构建人",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "",
-    "params": {
-      "url": "https://api.yesdididi.com/base-api/actuator/info",
-      "path": "$.git.build.user.name"
-    }
-  },
-  {
-    "id": 6,
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "",
-    "params": {}
-  },
-  {
-    "id": 7,
-    "type": "SSL-CERT",
-    "title": "dongfg.com证书过期时间",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "",
-    "params": {
-      "host": "dongfg.com"
-    }
-  },
-  {
-    "id": 8,
-    "type": "SSL-CERT",
-    "title": "证书已过期",
-    "rowSpan": 1,
-    "colSpan": 2,
-    "icon": "",
-    "params": {
-      "host": "expired.badssl.com"
-    }
-  },
-  {
-    "id": 9,
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 2,
-    "colSpan": 1,
-    "icon": "",
-    "params": {}
-  },
-  {
-    "id": 10,
-    "type": "PING",
-    "title": "PING 127.0.0.1",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "",
-    "params": {
-      "host": "127.0.0.1"
-    }
-  },
-  {
-    "id": 11,
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "",
-    "params": {}
-  },
-  {
-    "id": 12,
-    "type": "PING",
-    "title": "PING nas",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "icon-luyou",
-    "params": {
-      "host": "kuaiche-nas.myds.me"
-    }
-  },
-  {
-    "id": 13,
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "icon-wangluo",
-    "params": {}
-  },
-  {
-    "id": 14,
-    "type": "TEXT",
-    "title": "只是文本展示",
-    "rowSpan": 1,
-    "colSpan": 1,
-    "icon": "",
-    "params": {}
-  }
-]
+> Inspired by [Statsig's Open-Source Status Page](https://github.com/statsig-io/statuspage)
+> and [Gatus](https://github.com/TwiN/gatus)
+
+## 监控项配置
+
+```yaml
+endpoints:
+  - name: website                 # Name of your endpoint, can be anything
+    url: "https://twin.sh/health"
+    conditions:
+      - "[STATUS] == 200"         # Status must be 200
+      - "[BODY].status == UP"     # The json path "$.status" must be equal to UP
+      - "[RESPONSE_TIME] < 300"   # Response time must be under 300ms
+
+  - name: make-sure-header-is-rendered
+    url: "https://example.org/"
+    conditions:
+      - "[STATUS] == 200"                          # Status must be 200
+      - "[BODY] == pat(*<h1>Example Domain</h1>*)" # Body must contain the specified header
 ```
 
-</details>
+### Conditions
 
-## 配置说明
-| 配置项   | 类型   | 说明                      |
-| -------- | ------ | ------------------------- |
-| id       | string | 唯一值                    |
-| type     | 枚举   | 类型枚举, 见下方说明      |
-| title    | string | 标题                      |
-| icon     | string | 可选, 图标, 使用 iconfont |
-| params   | object | 配合 type 使用,见下方说明 |
-| children | -      | type=GROUP时，支持        |
-| rowSpan  | number | 行跨度, 默认1             |
-| colSpan  | number | 列跨度, 默认1             |
+Here are some examples of conditions you can use:
 
-### TEXT
-> 用于文本展示
-```jsonc
-{
-    "type": "TEXT",
-    "params": {
-        "text": "" // 文本内容
-    }
-}
-```
+| Condition                        | Description                                         | Passing values             | Failing values   |
+|:---------------------------------|:----------------------------------------------------|:---------------------------|------------------|
+| `[STATUS] == 200`                | Status must be equal to 200                         | 200                        | 201, 404, ...    |
+| `[STATUS] < 300`                 | Status must lower than 300                          | 200, 201, 299              | 301, 302, ...    |
+| `[STATUS] <= 299`                | Status must be less than or equal to 299            | 200, 201, 299              | 301, 302, ...    |
+| `[STATUS] > 400`                 | Status must be greater than 400                     | 401, 402, 403, 404         | 400, 200, ...    |
+| `[STATUS] == any(200, 429)`      | Status must be either 200 or 429                    | 200, 429                   | 201, 400, ...    |
+| `[CONNECTED] == true`            | Connection to host must've been successful          | true                       | false            |
+| `[RESPONSE_TIME] < 500`          | Response time must be below 500ms                   | 100ms, 200ms, 300ms        | 500ms, 501ms     |
+| `[IP] == 127.0.0.1`              | Target IP must be 127.0.0.1                         | 127.0.0.1                  | 0.0.0.0          |
+| `[BODY] == 1`                    | The body must be equal to 1                         | 1                          | `{}`, `2`, ...   |
+| `[BODY].user.name == john`       | JSONPath value of `$.user.name` is equal to `john`  | `{"user":{"name":"john"}}` |                  |
+| `[BODY].data[0].id == 1`         | JSONPath value of `$.data[0].id` is equal to 1      | `{"data":[{"id":1}]}`      |                  |
+| `[BODY].age == [BODY].id`        | JSONPath value of `$.age` is equal JSONPath `$.id`  | `{"age":1,"id":1}`         |                  |
+| `len([BODY].data) < 5`           | Array at JSONPath `$.data` has less than 5 elements | `{"data":[{"id":1}]}`      |                  |
+| `len([BODY].name) == 8`          | String at JSONPath `$.name` has a length of 8       | `{"name":"john.doe"}`      | `{"name":"bob"}` |
+| `has([BODY].errors) == false`    | JSONPath `$.errors` does not exist                  | `{"name":"john.doe"}`      | `{"errors":[]}`  |
+| `has([BODY].users) == true`      | JSONPath `$.users` exists                           | `{"users":[]}`             | `{}`             |
+| `[BODY].name == pat(john*)`      | String at JSONPath `$.name` matches pattern `john*` | `{"name":"john.doe"}`      | `{"name":"bob"}` |
+| `[BODY].id == any(1, 2)`         | Value at JSONPath `$.id` is equal to `1` or `2`     | 1, 2                       | 3, 4, 5          |
+| `[CERTIFICATE_EXPIRATION] > 48h` | Certificate expiration is more than 48h away        | 49h, 50h, 123h             | 1h, 24h, ...     |
+| `[DOMAIN_EXPIRATION] > 720h`     | The domain must expire in more than 720h            | 4000h                      | 1h, 24h, ...     |
 
-#### HTTP-STATUS
-> 根据返回的 http 状态码判断地址是否可用
-> 状态码 [200, 400) 为成功，其他为失败
-```jsonc
-{
-    "type": "HTTP-STATUS",
-    "params": {
-        "url": "" // 请求网址
-    }
-}
-```
-#### HTTP-RAW
-> 展示原始返回，支持通过 regex 解析返回
-```jsonc
-{
-    "type": "HTTP-RAW",
-    "params": {
-        "url": "", // 请求网址
-        "regex": "" // 可选，通过regex解析返回
-    }
-}
-```
-#### HTTP-JSON
-> 展示JSON返回，支持通过 jsonpath 解析返回
-> - 参考 https://github.com/JSONPath-Plus/JSONPath
-> - 参考 https://jsonpath-plus.github.io/JSONPath/demo/
-```jsonc
-{
-    "type": "HTTP-JSON",
-    "params": {
-        "url": "", // 请求网址,
-        "path": "" // 通过jsonpath解析返回
-    }
-}
-```
+#### Placeholders
 
-#### SSL-CERT
-> 展示https证书是否过期
-```jsonc
-{
-    "type": "SSL-CERT",
-    "params": {
-        "host": "", // 主机地址
-        "port": 443 // https 端口, 默认 443
-    }
-}
-```
+| Placeholder                | Description                                                                               | Example of resolved value                    |
+|:---------------------------|:------------------------------------------------------------------------------------------|:---------------------------------------------|
+| `[STATUS]`                 | Resolves into the HTTP status of the request                                              | `404`                                        |
+| `[RESPONSE_TIME]`          | Resolves into the response time the request took, in ms                                   | `10`                                         |
+| `[IP]`                     | Resolves into the IP of the target host                                                   | `192.168.0.232`                              |
+| `[BODY]`                   | Resolves into the response body. Supports JSONPath.                                       | `{"name":"john.doe"}`                        |
+| `[CONNECTED]`              | Resolves into whether a connection could be established                                   | `true`                                       |
+| `[CERTIFICATE_EXPIRATION]` | Resolves into the duration before certificate expiration (valid units are "s", "m", "h".) | `24h`, `48h`, 0 (if not protocol with certs) |
+| `[DOMAIN_EXPIRATION]`      | Resolves into the duration before the domain expires (valid units are "s", "m", "h".)     | `24h`, `48h`, `1234h56m78s`                  |
+| `[DNS_RCODE]`              | Resolves into the DNS status of the response                                              | `NOERROR`                                    |
+
+#### Functions
+
+| Function | Description                                                                                                                                                                                                                         | Example                            |
+|:---------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------------------------|
+| `len`    | If the given path leads to an array, returns its length. Otherwise, the JSON at the given path is minified and converted to a string, and the resulting number of characters is returned. Works only with the `[BODY]` placeholder. | `len([BODY].username) > 8`         |
+| `has`    | Returns `true` or `false` based on whether a given path is valid. Works only with the `[BODY]` placeholder.                                                                                                                         | `has([BODY].errors) == false`      |
+| `pat`    | Specifies that the string passed as parameter should be evaluated as a pattern. Works only with `==` and `!=`.                                                                                                                      | `[IP] == pat(192.168.*)`           |
+| `any`    | Specifies that any one of the values passed as parameters is a valid value. Works only with `==` and `!=`.                                                                                                                          | `[BODY].ip == any(127.0.0.1, ::1)` |
+
+> 💡 Use `pat` only when you need to. `[STATUS] == pat(2*)` is a lot more expensive than `[STATUS] < 300`.

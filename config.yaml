@@ -1,0 +1,13 @@
+endpoints:
+  - name: 主站                 # Name of your endpoint, can be anything
+    url: "https://twin.sh/health"
+    conditions:
+      - "[STATUS] == 200"         # Status must be 200
+      - "[BODY].status == UP"     # The json path "$.status" must be equal to UP
+      - "[RESPONSE_TIME] < 300"   # Response time must be under 300ms
+
+  - name: dongfg' wiki
+    url: "https://example.org/"
+    conditions:
+      - "[STATUS] == 200"                          # Status must be 200
+      - "[BODY] == pat(*<h1>Example Domain</h1>*)" # Body must contain the specified header
