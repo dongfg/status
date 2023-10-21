@@ -18,5 +18,4 @@ jobs:
 
       - name: Run Health Check
         run: |
-          go mod download
-          go run main.go
+          go run .

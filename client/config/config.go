@@ -13,6 +13,9 @@ type Config struct {
 	// Debug Whether to enable debug logs
 	Debug bool `yaml:"debug,omitempty"`
 
+	// MaxDays of results to keep
+	MaxDays int `yaml:"maxDays,omitempty"`
+
 	// Endpoints List of endpoints to monitor
 	Endpoints []*core.Endpoint `yaml:"endpoints,omitempty"`
 }
@@ -30,6 +33,9 @@ func LoadConfiguration(cfgPath string) (*Config, error) {
 	if err != nil {
 		log.Printf("Error parse configuration from %s: %s", cfgPath, err)
 		return nil, fmt.Errorf("error parse configuration from file %s: %w", cfgPath, err)
+	}
+	if config.MaxDays == 0 {
+		config.MaxDays = 30
 	}
 	return config, err
 }

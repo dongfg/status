@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/dongfg/status/client/config"
+	"github.com/dongfg/status/client/gen"
+	"github.com/dongfg/status/client/log"
 	"time"
 )
 
@@ -12,12 +14,21 @@ func main() {
 	if err != nil {
 		return
 	}
+	var endpoints []gen.EndpointGen
 	for _, endpoint := range cfg.Endpoints {
 		if endpoint.IsEnabled() {
 			time.Sleep(777 * time.Millisecond)
 			result := endpoint.EvaluateHealth()
-			rb, _ := json.Marshal(result)
-			fmt.Println(string(rb))
+			endpoints = append(endpoints, gen.EndpointGen{
+				Name:    endpoint.Name,
+				URL:     endpoint.URL,
+				Results: log.SaveResultLog(endpoint, result, cfg.MaxDays),
+			})
+			if cfg.Debug {
+				rb, _ := json.Marshal(result)
+				fmt.Println(string(rb))
+			}
 		}
 	}
+	gen.Gen(endpoints)
 }
