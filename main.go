@@ -20,6 +20,7 @@ func main() {
 			time.Sleep(777 * time.Millisecond)
 			result := endpoint.EvaluateHealth()
 			endpoints = append(endpoints, gen.EndpointGen{
+				Key:     endpoint.Key(),
 				Name:    endpoint.Name,
 				URL:     endpoint.URL,
 				Results: log.SaveResultLog(endpoint, result, cfg.MaxDays),
@@ -30,5 +31,5 @@ func main() {
 			}
 		}
 	}
-	gen.Gen(endpoints)
+	gen.Gen(endpoints, cfg.MaxDays)
 }

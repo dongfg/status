@@ -7,6 +7,7 @@ endpoints:
       - "[RESPONSE_TIME] < 300"   # Response time must be under 300ms
 
   - name: dongfg' wiki
+    enabled: false
     url: "https://example.org/"
     conditions:
       - "[STATUS] == 200"                          # Status must be 200
