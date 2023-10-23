@@ -1,0 +1,21 @@
+endpoints:
+  - name: 主站
+    url: "https://dongfg.com"
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY] == pat(*<title>dongfg' blog</title>*)"
+      - "[RESPONSE_TIME] < 1000"
+
+  - name: Wiki
+    enabled: true
+    url: "https://wiki.dongfg.com"
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY] == pat(*<title>dongfg' wiki</title>*)"
+
+  - name: 记账服务
+    enabled: true
+    url: "https://fragile.api.dongfg.com/"
+    conditions:
+      - "[STATUS] == 200"
+      - "has([BODY].build) == true"
