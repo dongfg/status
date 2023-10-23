@@ -1,0 +1,1 @@
+[{"status":200,"hostname":"wiki.dongfg.com","duration":325004719,"conditionResults":[{"condition":"[STATUS] == 200","success":true},{"condition":"[BODY] == pat(*\u003ctitle\u003edongfg' wiki\u003c/title\u003e*)","success":true}],"success":true,"timestamp":"2023-10-23T04:20:30.861337319Z"}]

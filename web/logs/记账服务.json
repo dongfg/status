@@ -1,0 +1,1 @@
+[{"status":200,"hostname":"fragile.api.dongfg.com","duration":1020386198,"conditionResults":[{"condition":"[STATUS] == 200","success":true},{"condition":"has([BODY].build) == true","success":true}],"success":true,"timestamp":"2023-10-23T04:20:32.659997733Z"}]
