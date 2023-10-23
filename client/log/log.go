@@ -11,8 +11,8 @@ import (
 
 // SaveResultLog of endpoint health check
 func SaveResultLog(endpoint *core.Endpoint, result *core.Result, maxDays int) []*core.Result {
-	_ = os.Mkdir("logs", 0755)
-	logFile := fmt.Sprintf("logs/%s.json", endpoint.Key())
+	_ = os.Mkdir("web/logs", 0755)
+	logFile := fmt.Sprintf("web/logs/%s.json", endpoint.Key())
 	var results []*core.Result
 	if _, err := os.Stat(logFile); errors.Is(err, os.ErrNotExist) {
 		results = make([]*core.Result, 0)
