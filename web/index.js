@@ -15,7 +15,7 @@ async function genReportLog(container, endpoint) {
 /**
  * 单个 endpoint 模板 render
  */
-function constructStatusStream({name, url, sla, reports}) {
+function constructStatusStream({name, url, sla, status, reports}) {
     let streamContainer = applyTemplate("statusStreamContainerTemplate");
     for (let ii = 0; ii < reports.length; ii++) {
         // 每日状态 模板 render
@@ -27,8 +27,8 @@ function constructStatusStream({name, url, sla, reports}) {
     const container = applyTemplate("statusContainerTemplate", {
         title: name,
         url: url,
-        color: reports[0].status,
-        status: getStatusText(reports[0].status),
+        color: status,
+        status: getStatusText(status),
         upTime: sla + "%",
     });
 
@@ -36,7 +36,7 @@ function constructStatusStream({name, url, sla, reports}) {
     return container;
 }
 
-function constructStatusLine(name, {day, status, conditionResults, sla}) {
+function constructStatusLine(name, {day, status, conditionResults}) {
     const date = new Date(day);
     let square = applyTemplate("statusSquareTemplate", {
         color: status,
@@ -44,7 +44,7 @@ function constructStatusLine(name, {day, status, conditionResults, sla}) {
     });
 
     const show = () => {
-        showTooltip(square, name, date, status);
+        showTooltip(square, name, date, status, conditionResults);
     };
     square.addEventListener("mouseover", show);
     square.addEventListener("mousedown", show);
@@ -114,16 +114,23 @@ function getStatusText(status) {
 /**
  * 状态详情
  */
-function getStatusDescriptiveText(status) {
-    return status === "nodata"
-        ? "No Data Available: Health check was not performed."
-        : status === "success"
-            ? "No downtime recorded on this day."
-            : status === "failure"
-                ? "Major outages recorded on this day."
-                : status === "partial"
-                    ? "Partial outages recorded on this day."
-                    : "Unknown";
+function getStatusDescriptiveText(status, conditionResults) {
+    const tooltipDesc = document.createElement("code");
+    tooltipDesc.setAttribute("id", "tooltipDescription");
+    tooltipDesc.setAttribute("class", "tooltipDescription");
+    if (status === "nodata") {
+        const condition = document.createElement("div");
+        condition.innerText = "No Data Available: Health check was not performed.";
+        tooltipDesc.appendChild(condition);
+        return tooltipDesc;
+    }
+
+    conditionResults.forEach((cr) => {
+        const condition = document.createElement("div");
+        condition.innerText = `${cr.success ? "✓" : "x"} ~ ${cr.condition}`;
+        tooltipDesc.appendChild(condition);
+    });
+    return tooltipDesc;
 }
 
 function getTooltip(name, date, status) {
@@ -133,13 +140,12 @@ function getTooltip(name, date, status) {
 
 let tooltipTimeout = null;
 
-function showTooltip(element, name, date, status) {
+function showTooltip(element, name, date, status, conditionResults) {
     clearTimeout(tooltipTimeout);
     const toolTipDiv = document.getElementById("tooltip");
 
     document.getElementById("tooltipDateTime").innerText = date.toDateString();
-    document.getElementById("tooltipDescription").innerText =
-        getStatusDescriptiveText(status);
+    document.getElementById("tooltipDescription").replaceWith(getStatusDescriptiveText(status, conditionResults));
 
     const statusDiv = document.getElementById("tooltipStatus");
     statusDiv.innerText = getStatusText(status);

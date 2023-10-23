@@ -1,14 +1,21 @@
 endpoints:
-  - name: 主站                 # Name of your endpoint, can be anything
-    url: "https://twin.sh/health"
+  - name: 主站
+    url: "https://dongfg.com"
     conditions:
-      - "[STATUS] == 200"         # Status must be 200
-      - "[BODY].status == UP"     # The json path "$.status" must be equal to UP
-      - "[RESPONSE_TIME] < 300"   # Response time must be under 300ms
+      - "[STATUS] == 200"
+      - "[BODY] == pat(*<title>dongfg' blog</title>*)"
+      - "[RESPONSE_TIME] < 1000"
 
-  - name: dongfg' wiki
-    enabled: false
-    url: "https://example.org/"
+  - name: Wiki
+    enabled: true
+    url: "https://wiki.dongfg.com"
     conditions:
-      - "[STATUS] == 200"                          # Status must be 200
-      - "[BODY] == pat(*<h1>Example Domain</h1>*)" # Body must contain the specified header
+      - "[STATUS] == 200"
+      - "[BODY] == pat(*<title>dongfg' wiki</title>*)"
+
+  - name: 记账服务
+    enabled: true
+    url: "https://fragile.api.dongfg.com/"
+    conditions:
+      - "[STATUS] == 200"
+      - "has([BODY].build) == true"

@@ -248,7 +248,7 @@ footer a {
   position: absolute;
   text-align: left;
   z-index: 100;
-  width: 240px;
+  width: auto;
   transition: opacity 0.2s;
 }
 

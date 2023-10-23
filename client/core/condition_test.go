@@ -35,7 +35,6 @@ func TestCondition_Validate(t *testing.T) {
 		{condition: "has([BODY].users[0].name) == true", expectedErr: nil},
 		{condition: "[BODY].name == pat(john*)", expectedErr: nil},
 		{condition: "[CERTIFICATE_EXPIRATION] > 48h", expectedErr: nil},
-		{condition: "[DOMAIN_EXPIRATION] > 720h", expectedErr: nil},
 		{condition: "raw == raw", expectedErr: nil},
 		{condition: "[STATUS] ? 201", expectedErr: errors.New("invalid condition: [STATUS] ? 201")},
 		{condition: "[STATUS]==201", expectedErr: errors.New("invalid condition: [STATUS]==201")},

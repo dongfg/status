@@ -42,6 +42,9 @@ type EndpointReport struct {
 	// SLA of all results
 	SLA float64 `json:"sla"`
 
+	// Status of latest (nodata, success, failure, partial)
+	Status string `json:"status"`
+
 	// Reports of health check per day
 	Reports []EndpointDayReport `json:"reports"`
 }
@@ -88,6 +91,7 @@ func Gen(endpoints []EndpointGen, maxDays int) {
 				dayReport.Day = day
 				total += dayReport.SLA
 				dayReports = append(dayReports, dayReport)
+				report.Status = latestStatus(results)
 			} else {
 				// 数据填充
 				dayReports = append(dayReports, EndpointDayReport{
@@ -106,7 +110,7 @@ func Gen(endpoints []EndpointGen, maxDays int) {
 	}
 
 	rb, _ := json.Marshal(reports)
-	genFile := "logs/endpoints.js"
+	genFile := "web/endpoints.js"
 	_ = os.WriteFile(genFile, []byte(fmt.Sprintf("const endpoints = %s;", string(rb))), 0644)
 }
 
@@ -148,4 +152,21 @@ func calcDaySLA(results []*core.Result) EndpointDayReport {
 		ConditionResults: failureConditions,
 		SLA:              math.Round(float64(success) * 100 / float64(total)),
 	}
+}
+
+func latestStatus(results []*core.Result) string {
+	if len(results) == 1 {
+		return "nodata"
+	}
+	last := results[len(results)-1]
+	if last.Success {
+		return "success"
+	}
+	partialSuccess := lo.Filter(last.ConditionResults, func(item *core.ConditionResult, index int) bool {
+		return item.Success
+	})
+	if len(partialSuccess) == 0 {
+		return "failure"
+	}
+	return "partial"
 }
