@@ -1,1 +1,0 @@
-[{"status":200,"hostname":"dongfg.com","duration":1262217259,"conditionResults":[{"condition":"[STATUS] == 200","success":true},{"condition":"[BODY] == pat(*\u003ctitle\u003edongfg' blog\u003c/title\u003e*)","success":true},{"condition":"[RESPONSE_TIME] (1262) \u003c 1000","success":false}],"success":false,"timestamp":"2023-10-23T04:20:29.757855781Z"}]
