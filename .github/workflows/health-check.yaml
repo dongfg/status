@@ -2,9 +2,10 @@ name: Health Check
 
 on:
   push:
-    branches: [ health-check ]
-  schedule:
-    - cron: "0 * * * *"
+    # branches: [ health-check ]
+    # branches: [ disabled ]
+  # schedule:
+  # - cron: "0 * * * *"
 
 jobs:
   build:
