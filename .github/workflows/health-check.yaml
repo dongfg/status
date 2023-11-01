@@ -3,7 +3,7 @@ name: Health Check
 on:
   push:
     # branches: [ health-check ]
-    # branches: [ disabled ]
+    branches: [disabled]
   # schedule:
   # - cron: "0 * * * *"
 
