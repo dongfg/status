@@ -1,6 +1,6 @@
 module github.com/dongfg/status
 
-go 1.21.3
+go 1.21
 
 require (
 	github.com/TwiN/gatus/v5 v5.6.0
