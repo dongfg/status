@@ -1,3 +1,4 @@
+debug: true
 endpoints:
   - name: 主站
     url: "https://dongfg.com"
