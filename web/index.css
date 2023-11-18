@@ -118,7 +118,13 @@ footer a {
 .headline {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+}
+
+hr {
+  height: 1px;
+  background-color: #e1e1e3;
+  border: none;
 }
 
 .headline span {
