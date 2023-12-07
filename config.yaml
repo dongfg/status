@@ -16,7 +16,23 @@ endpoints:
 
   - name: 记账服务
     enabled: true
-    url: "https://fragile.api.dongfg.com/"
+    url: "https://fragile.api.dongfg.com"
     conditions:
       - "[STATUS] == 200"
       - "has([BODY].build) == true"
+
+  - name: Family Site
+    enabled: true
+    url: "https://drfamily.site"
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY] == pat(*<title>DR.Family*)"
+      - "[RESPONSE_TIME] < 5000"
+
+  - name: Serverless Doc
+    enabled: true
+    url: "https://func.dongfg.com"
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY] == pat(*<title>Serverless Funtions</title>*)"
+      - "[RESPONSE_TIME] < 5000"
