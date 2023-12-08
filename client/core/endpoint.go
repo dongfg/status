@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/Masterminds/semver/v3"
 	"github.com/dongfg/status/client/util"
 	"io"
 	"net"
@@ -32,6 +33,7 @@ const (
 
 	EndpointTypeDNS     EndpointType = "DNS"
 	EndpointTypeHTTP    EndpointType = "HTTP"
+	EndpointTypeVERSION EndpointType = "VERSION"
 	EndpointTypeUNKNOWN EndpointType = "UNKNOWN"
 )
 
@@ -53,6 +55,9 @@ var (
 
 	// ErrInvalidConditionFormat is the error with which Gatus will panic if a condition has an invalid format
 	ErrInvalidConditionFormat = errors.New("invalid condition format: does not match '<VALUE> <COMPARATOR> <VALUE>'")
+
+	// ErrInvalidVersionFormat is the error with which version not match Semantic Versions
+	ErrInvalidVersionFormat = errors.New("invalid condition format: does not match '<VALUE> <COMPARATOR> <VALUE>'")
 )
 
 // Endpoint is the configuration of a monitored
@@ -81,6 +86,9 @@ type Endpoint struct {
 	// Headers of the request
 	Headers map[string]string `yaml:"headers,omitempty"`
 
+	// Version of Current Release | Package
+	Version string `yaml:"version,omitempty"`
+
 	// Conditions used to determine the health of the endpoint
 	Conditions []Condition `yaml:"conditions"`
 }
@@ -99,6 +107,9 @@ func (endpoint Endpoint) Type() EndpointType {
 	case endpoint.DNS != nil:
 		return EndpointTypeDNS
 	case strings.HasPrefix(endpoint.URL, "http://") || strings.HasPrefix(endpoint.URL, "https://"):
+		if endpoint.Version != "" {
+			return EndpointTypeVERSION
+		}
 		return EndpointTypeHTTP
 	default:
 		return EndpointTypeUNKNOWN
@@ -142,6 +153,11 @@ func (endpoint *Endpoint) ValidateAndSetDefaults() error {
 	if endpoint.DNS != nil {
 		return endpoint.DNS.validateAndSetDefault()
 	}
+	if endpoint.Type() == EndpointTypeVERSION {
+		if _, err := semver.NewVersion(endpoint.Version); err != nil {
+			return fmt.Errorf("%v: %w", ErrInvalidVersionFormat, err)
+		}
+	}
 	if endpoint.Type() == EndpointTypeUNKNOWN {
 		return ErrUnknownEndpointType
 	}
@@ -176,6 +192,9 @@ func (endpoint *Endpoint) EvaluateHealth() *Result {
 		} else {
 			result.Hostname = urlObject.Hostname()
 		}
+	}
+	if endpoint.Type() == EndpointTypeVERSION {
+		result.Version = endpoint.Version
 	}
 	// Retrieve IP if necessary
 	if endpoint.needsToRetrieveIP() {
@@ -213,7 +232,7 @@ func (endpoint *Endpoint) call(result *Result) {
 	var err error
 	var certificate *x509.Certificate
 	endpointType := endpoint.Type()
-	if endpointType == EndpointTypeHTTP {
+	if endpointType == EndpointTypeHTTP || endpointType == EndpointTypeVERSION {
 		request = endpoint.buildHTTPRequest()
 	}
 	startTime := time.Now()

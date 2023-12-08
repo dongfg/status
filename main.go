@@ -19,10 +19,14 @@ func main() {
 		if endpoint.IsEnabled() {
 			time.Sleep(777 * time.Millisecond)
 			result := endpoint.EvaluateHealth()
+			url := endpoint.URL
+			if endpoint.Version != "" {
+				url = "Running Version: " + endpoint.Version
+			}
 			endpoints = append(endpoints, gen.EndpointGen{
 				Key:     endpoint.Key(),
 				Name:    endpoint.Name,
-				URL:     endpoint.URL,
+				URL:     url,
 				Results: log.SaveResultLog(endpoint, result, cfg.MaxDays),
 			})
 			if cfg.Debug {

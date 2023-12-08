@@ -1,7 +1,3 @@
-const maxDays = 30;
-
-console.log("endpoints", endpoints);
-
 /**
  * endpoint 报告生成
  */
