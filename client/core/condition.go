@@ -3,6 +3,7 @@ package core
 import (
 	"errors"
 	"fmt"
+	"github.com/Masterminds/semver/v3"
 	"strconv"
 	"strings"
 	"time"
@@ -47,6 +48,11 @@ const (
 	//
 	// Values that could replace the placeholder: 4461677039 (~52 days)
 	CertificateExpirationPlaceholder = "[CERTIFICATE_EXPIRATION]"
+
+	// VersionPlaceholder is a placeholder for version check.
+	//
+	// Values that could replace the placeholder: 1.2.0, 1.2.3, ...
+	VersionPlaceholder = "[VERSION]"
 )
 
 // Functions
@@ -106,6 +112,22 @@ func (c Condition) evaluate(result *Result, dontResolveFailedConditions bool) bo
 	condition := string(c)
 	success := false
 	conditionToDisplay := condition
+	if strings.Contains(condition, VersionPlaceholder) {
+		constraints := strings.ReplaceAll(condition, VersionPlaceholder, "")
+		parameters, resolvedParameters := sanitizeAndResolve([]string{VersionPlaceholder, constraints}, result)
+		nowVersion, err := semver.NewVersion(resolvedParameters[0])
+		if err != nil {
+			success = false
+		} else {
+			checkVersion, _ := semver.NewConstraint(resolvedParameters[1])
+			success = checkVersion.Check(nowVersion)
+		}
+		if !success && !dontResolveFailedConditions {
+			conditionToDisplay = prettify(parameters, resolvedParameters, "!=")
+		}
+		result.ConditionResults = append(result.ConditionResults, &ConditionResult{Condition: conditionToDisplay, Success: success})
+		return success
+	}
 	if strings.Contains(condition, " == ") {
 		parameters, resolvedParameters := sanitizeAndResolve(strings.Split(condition, " == "), result)
 		success = isEqual(resolvedParameters[0], resolvedParameters[1])
@@ -156,7 +178,7 @@ func (c Condition) evaluate(result *Result, dontResolveFailedConditions bool) bo
 // hasBodyPlaceholder checks whether the condition has a BodyPlaceholder
 // Used for determining whether the response body should be read or not
 func (c Condition) hasBodyPlaceholder() bool {
-	return strings.Contains(string(c), BodyPlaceholder)
+	return strings.Contains(string(c), BodyPlaceholder) || strings.Contains(string(c), VersionPlaceholder)
 }
 
 // hasIPPlaceholder checks whether the condition has an IPPlaceholder
@@ -250,6 +272,9 @@ func sanitizeAndResolve(elements []string, result *Result) ([]string, []string) 
 			element = strconv.FormatBool(result.Connected)
 		case CertificateExpirationPlaceholder:
 			element = strconv.FormatInt(result.CertificateExpiration.Milliseconds(), 10)
+		case VersionPlaceholder:
+			resolvedElement, _, _ := jsonpath.Eval("data", result.Body)
+			element = resolvedElement
 		default:
 			// if contains the BodyPlaceholder, then evaluate json path
 			if strings.Contains(element, BodyPlaceholder) {

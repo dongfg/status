@@ -36,3 +36,11 @@ endpoints:
       - "[STATUS] == 200"
       - "[BODY] == pat(*<title>Serverless Funtions</title>*)"
       - "[RESPONSE_TIME] < 5000"
+
+  - name: VaultWarden 版本
+    enabled: true
+    url: "https://version.func.dongfg.com/github?repo=dani-garcia/vaultwarden"
+    version: 1.28.1
+    conditions:
+      - "[VERSION] ~1.28.1"
+      - "[VERSION] ^1.28.1"

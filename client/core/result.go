@@ -46,6 +46,9 @@ type Result struct {
 	// Note that this field is not persisted in the storage.
 	// It is used for health evaluation as well as debugging purposes.
 	Body []byte `json:"-"`
+
+	// Version of Current Release | Package
+	Version string `json:"version,omitempty"`
 }
 
 // AddError adds an error to the result's list of errors.
