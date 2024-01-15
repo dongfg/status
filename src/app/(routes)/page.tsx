@@ -22,6 +22,12 @@ export default async function Index() {
         loop
       >
         <source src="/bg.webm" type="video/webm" />
+        <track
+          src="/bg.webm.vtt"
+          kind="captions"
+          srcLang="en"
+          label="english_captions"
+        ></track>
       </video>
       <Actions />
       <Footer />

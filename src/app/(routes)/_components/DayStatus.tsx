@@ -30,6 +30,7 @@ export default function DayStatus(props: DayStatusProps) {
         tabIndex={0}
         role="button"
         className={`rounded-lg h-6 w-6 ${colors[status]}`}
+        aria-label="Status Color Block"
       ></div>
       <div
         tabIndex={0}
