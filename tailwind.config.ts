@@ -6,7 +6,16 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  safelist: ["bg-success", "bg-warning", "bg-error", "bg-info", "bg-base-200"],
+  safelist: [
+    "bg-success",
+    "bg-warning",
+    "bg-error",
+    "bg-info",
+    "bg-base-200",
+    "radio-success",
+    "radio-warning",
+    "radio-error",
+  ],
   theme: {
     extend: {
       backgroundImage: {

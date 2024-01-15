@@ -5,6 +5,17 @@ import { colors } from "@/service/query";
 
 export interface DayStatusProps extends Result {}
 
+const radioColor = (conditions: { success: boolean }[]): string => {
+  let color = "radio-success";
+  if (conditions.some((c) => !c.success)) {
+    color = "radio-warning";
+  }
+  if (conditions.every((c) => !c.success)) {
+    color = "radio-error";
+  }
+  return color;
+};
+
 /**
  * 每日状态
  */
@@ -31,19 +42,22 @@ export default function DayStatus(props: DayStatusProps) {
           <div className="divider my-1 h-px"></div>
           {/* 当日最近N次请求 */}
           <form className="flex flex-row space-x-2">
-            {logs.map((l, idx) => (
-              <input
-                key={idx}
-                type="radio"
-                name="logs"
-                checked={idx === logIdx}
-                onChange={() => {
-                  setLogIdx(idx);
-                  setLogTime(l.time);
-                }}
-                className="radio radio-success radio-sm"
-              />
-            ))}
+            {logs.map((l, idx) => {
+              const color = radioColor(l.conditions);
+              return (
+                <input
+                  key={idx}
+                  type="radio"
+                  name="logs"
+                  checked={idx === logIdx}
+                  onChange={() => {
+                    setLogIdx(idx);
+                    setLogTime(l.time);
+                  }}
+                  className={`radio ${color} radio-sm`}
+                />
+              );
+            })}
           </form>
           {logs && logs.length ? (
             (logs[logIdx].conditions || []).map((r, idx) => (
