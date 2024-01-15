@@ -5,11 +5,11 @@ import Image from "next/image";
  */
 export default function Footer() {
   return (
-    <footer className="footer items-center p-4 bg-neutral text-neutral-content hidden md:block">
+    <footer className="footer items-center p-4 bg-neutral text-neutral-content hidden md:grid">
       <aside className="items-center grid-flow-col">
         <p>Copyright © all right reserved</p>
       </aside>
-      <nav className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
+      <nav className="grid-flow-col gap-4 place-self-center justify-self-end">
         <a href="#" target="_blank">
           <Image
             src="/logo-fg.png"
