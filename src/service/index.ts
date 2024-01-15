@@ -10,6 +10,7 @@ export type Endpoint = {
 };
 
 export type Result = {
+  key: string;
   day: string;
   sla: number;
   status: Status;

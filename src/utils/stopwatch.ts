@@ -8,9 +8,11 @@ class StopWatch {
     this.startTime = performance.now();
   }
 
-  stop() {
+  stop(print = false) {
     const timeCost = performance.now() - this.startTime;
-    console.log("Task: %s, cost: %dms", this.taskName, timeCost);
+    if (print) {
+      console.log("Task: %s, cost: %dms", this.taskName, timeCost);
+    }
     this.history.push({ taskName: this.taskName, timeCost });
   }
 
