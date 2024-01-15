@@ -3,7 +3,7 @@ import { useState } from "react";
 import type { Result } from "@/service";
 import { colors } from "@/service/query";
 
-export interface DayStatusProps extends Result {}
+export interface DayStatusProps extends Omit<Result, "key"> {}
 
 const radioColor = (conditions: { success: boolean }[]): string => {
   let color = "radio-success";

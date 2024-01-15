@@ -18,12 +18,12 @@ export default async function StatusGroup(props: StatusGroupProps) {
       <div className="card-body">
         <h2 className="card-title flex justify-between ">{name}</h2>
         <div className="divider my-1"></div>
-        {endpoints.map((e) => (
+        {endpoints.map(({ key: endpoint, ...e }, idx) => (
           <StatusItem
+            key={idx}
             {...e}
-            key={e.key}
-            endpoint={e.key}
-            results={allResults[e.key]}
+            endpoint={endpoint}
+            results={allResults[endpoint]}
           />
         ))}
       </div>

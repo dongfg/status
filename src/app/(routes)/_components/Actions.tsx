@@ -1,6 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect, useRef } from "react";
 import { revalidate } from "./server-actions";
 
 // 刷新时间: 秒
@@ -10,32 +9,33 @@ const REFRESH_INTERVAL = 60;
  * 状态分组
  */
 export default function Actions() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
   const [timeLeft, setTimeLeft] = useState(REFRESH_INTERVAL);
-  const [countdown, setCountdown] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (countdown) {
+    if (timeLeft <= 1) {
+      revalidate("/");
+    }
+  }, [timeLeft]);
+
+  const toggleRefresh = (on: boolean) => {
+    if (!on && intervalRef.current) {
+      clearInterval(intervalRef.current as NodeJS.Timeout);
+      intervalRef.current = null;
+      return;
+    }
+    if (!intervalRef.current) {
+      intervalRef.current = setInterval(() => {
         setTimeLeft((t) => {
           const tt = t - 1;
-          if (tt <= 1) {
-            revalidate("/");
-            router.refresh();
+          if (tt <= 0) {
             return REFRESH_INTERVAL;
           }
           return tt;
         });
-      }
-    }, 1000);
-    return () => clearInterval(intervalId);
-  }, [countdown, router]);
-
-  useEffect(() => {
-    if (searchParams.get("refresh")) {
-      setCountdown(true);
+      }, 1000);
     }
-  }, [searchParams]);
+  };
 
   return (
     <div className="absolute top-12 right-12 card bg-base-100 shadow-md w-72 hidden md:block">
@@ -53,12 +53,7 @@ export default function Actions() {
                 id="autoRefresh"
                 type="checkbox"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setCountdown(e.target.checked);
-                  if (e.target.checked) {
-                    router.push("/?refresh=true", { scroll: false });
-                  } else {
-                    router.push("/", { scroll: false });
-                  }
+                  toggleRefresh(e.target.checked);
                 }}
               />
               <div className="swap-on">ON</div>
