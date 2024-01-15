@@ -1,4 +1,5 @@
 // import { unstable_noStore as noStore } from "next/cache";
+import { Suspense } from "react";
 import StatusGroup from "./_components/StatusGroup";
 import Footer from "./_components/Footer";
 import Actions from "./_components/Actions";
@@ -30,6 +31,13 @@ export default async function Index() {
         ></track>
       </video>
       <Actions />
+      {/* https://nextjs.org/docs/messages/deopted-into-client-rendering */}
+      <Suspense
+        fallback={<span className="loading loading-infinity loading-xs"></span>}
+      >
+        {/* client side component */}
+        <Actions />
+      </Suspense>
       <Footer />
     </main>
   );
