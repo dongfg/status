@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { themeChange } from "theme-change";
 import { useRouter, useSearchParams } from "next/navigation";
 
 // 刷新时间: 秒
