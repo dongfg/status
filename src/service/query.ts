@@ -1,12 +1,15 @@
 import { endpoints, results } from "./database";
-import type { Result, Status } from "./index";
+import type { Endpoint, Result, Status } from "./index";
 
 const MAX_DAYS = 30;
 
 /**
  * 获取所有配置
  */
-export const queryEndpoints = endpoints;
+export const queryEndpoints = async (): Promise<Endpoint[]> => {
+  const rows = await endpoints();
+  return rows.sort((a, b) => a.id - b.id);
+};
 
 /**
  * 获取监控详情
@@ -48,7 +51,7 @@ export const colors: { [key in Status]: string } = {
 const getDatesForLastNDays = (max: number) => {
   const now = new Date();
   const dates: Date[] = [];
-  for (let i = 0; i <= max; i++) {
+  for (let i = 0; i < max; i++) {
     let currentDate = new Date(now);
     currentDate.setDate(now.getDate() - i);
     dates.push(new Date(currentDate));

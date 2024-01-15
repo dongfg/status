@@ -22,7 +22,7 @@ export default function DayStatus(props: DayStatusProps) {
       ></div>
       <div
         tabIndex={0}
-        className="dropdown-content z-[1] card card-compact min-w-64 w-fit p-2 m-2 shadow-md bg-base-100"
+        className="hidden md:block dropdown-content z-[1] card card-compact min-w-64 w-fit p-2 m-2 shadow-md bg-base-100"
       >
         <div className="card-body">
           <span className="card-title whitespace-nowrap text-sm	">
