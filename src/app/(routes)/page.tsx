@@ -1,14 +1,14 @@
-import { unstable_noStore as noStore } from "next/cache";
+// import { unstable_noStore as noStore } from "next/cache";
 import StatusGroup from "./_components/StatusGroup";
 import Footer from "./_components/Footer";
 import Actions from "./_components/Actions";
 import { queryEndpoints } from "@/service/query";
 
-// revalidate the data at most every hour
-// export const revalidate = 3600;
+// revalidate the data at most half hour
+export const revalidate = 1800;
 
 export default async function Index() {
-  noStore();
+  // noStore();
   const endpoints = await queryEndpoints();
   return (
     <main className="font-mono relative min-h-screen min-w-full flex flex-col justify-between items-center">

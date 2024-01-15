@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { revalidate } from "./server-actions";
 
 // 刷新时间: 秒
 const REFRESH_INTERVAL = 60;
@@ -19,6 +20,7 @@ export default function Actions() {
         setTimeLeft((t) => {
           const tt = t - 1;
           if (tt <= 1) {
+            revalidate("/");
             router.refresh();
             return REFRESH_INTERVAL;
           }

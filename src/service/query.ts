@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { endpoints, results } from "./database";
 import type { Endpoint, Result, Status } from "./index";
 
@@ -6,15 +7,15 @@ const MAX_DAYS = 30;
 /**
  * 获取所有配置
  */
-export const queryEndpoints = async (): Promise<Endpoint[]> => {
+export const queryEndpoints = cache(async (): Promise<Endpoint[]> => {
   const rows = await endpoints();
   return rows.sort((a, b) => a.id - b.id);
-};
+});
 
 /**
  * 获取监控详情
  */
-export const queryResults = async (key: string): Promise<Result[]> => {
+export const queryResults = cache(async (key: string): Promise<Result[]> => {
   const all = await results(key);
   const dayResultMap = all.reduce<{ [key: string]: Result }>((prev, curr) => {
     prev[curr.day] = curr;
@@ -36,7 +37,7 @@ export const queryResults = async (key: string): Promise<Result[]> => {
     }
   }
   return rs;
-};
+});
 
 export const colors: { [key in Status]: string } = {
   success: "bg-success",
