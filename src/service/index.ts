@@ -1,5 +1,6 @@
 export type Status = "nodata" | "success" | "failure" | "partial";
 export type Endpoint = {
+  id: number;
   key: string;
   name: string;
   url?: string;

@@ -38,7 +38,7 @@ export default function Actions() {
   }, [searchParams]);
 
   return (
-    <div className="absolute top-12 right-12 card bg-base-100 shadow-md w-72">
+    <div className="absolute top-12 right-12 card bg-base-100 shadow-md w-72 hidden md:block">
       <div className="card-body">
         <h2 className="card-title flex justify-between">
           <span>Actions</span>

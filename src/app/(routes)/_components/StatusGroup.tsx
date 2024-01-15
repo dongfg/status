@@ -12,7 +12,7 @@ export interface StatusGroupProps {
 export default function StatusGroup(props: StatusGroupProps) {
   const { name, endpoints } = props;
   return (
-    <div className="card bg-base-100 shadow-md w-3/5">
+    <div className="card bg-base-100 md:shadow-md w-full md:w-3/5">
       <div className="card-body">
         <h2 className="card-title flex justify-between ">{name}</h2>
         <div className="divider my-1"></div>
