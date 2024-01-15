@@ -7,8 +7,13 @@ export const endpoints = async (): Promise<Endpoint[]> => {
   return rows;
 };
 
-export const results = async (key: string): Promise<Result[]> => {
+export const results = async (key?: string): Promise<Result[]> => {
+  if (key) {
+    const { rows } =
+      await sql<Result>`select * from endpoint_result where key = ${key} and deleted_at is null`;
+    return rows;
+  }
   const { rows } =
-    await sql<Result>`select * from endpoint_result where key = ${key} and deleted_at is null`;
+    await sql<Result>`select * from endpoint_result where deleted_at is null`;
   return rows;
 };
