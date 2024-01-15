@@ -1,6 +1,7 @@
 import { cache } from "react";
 import { endpoints, results } from "./database";
 import type { Endpoint, Result, Status } from "./index";
+import StopWatch from "@/utils/stopwatch";
 
 const MAX_DAYS = 30;
 
@@ -8,19 +9,32 @@ const MAX_DAYS = 30;
  * 获取所有配置
  */
 export const queryEndpoints = cache(async (): Promise<Endpoint[]> => {
+  const stopWatch = new StopWatch();
+  stopWatch.start("DbQuery-endpoints");
   const rows = await endpoints();
-  return rows.sort((a, b) => a.id - b.id);
+  stopWatch.stop();
+  stopWatch.start("SortById-endpoints");
+  const rs = rows.sort((a, b) => a.id - b.id);
+  stopWatch.stop();
+  stopWatch.prettyPrint();
+  return rs;
 });
 
 /**
  * 获取监控详情
  */
 export const queryResults = cache(async (key: string): Promise<Result[]> => {
+  const stopWatch = new StopWatch();
+  stopWatch.start("DbQuery-results");
   const all = await results(key);
+  stopWatch.stop();
+  stopWatch.start("GroupByDay-results");
   const dayResultMap = all.reduce<{ [key: string]: Result }>((prev, curr) => {
     prev[curr.day] = curr;
     return prev;
   }, {});
+  stopWatch.stop();
+  stopWatch.start("FillNDays-results");
   const days = getDatesForLastNDays(MAX_DAYS);
   const rs: Result[] = [];
   for (const day of days) {
@@ -36,6 +50,8 @@ export const queryResults = cache(async (key: string): Promise<Result[]> => {
       });
     }
   }
+  stopWatch.stop();
+  stopWatch.prettyPrint();
   return rs;
 });
 
