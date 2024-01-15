@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Endpoint, Result } from "@/service";
 import DayStatus from "./DayStatus";
 
@@ -7,7 +8,7 @@ export interface StatusItemProps extends Endpoint {
 }
 
 export default async function StatusItem(props: StatusItemProps) {
-  const { endpoint, name, url, desc, sla, results } = props;
+  const { name, url, desc, sla, results } = props;
   return (
     <div className="card card-bordered min-h-full rounded">
       <div className="card-body">
@@ -27,8 +28,13 @@ export default async function StatusItem(props: StatusItemProps) {
           <div className="hidden md:block">{sla}% in the last 30 days</div>
         </div>
         <div className="grid grid-cols-10 gap-2 md:grid-cols-[repeat(30,_minmax(0,_1fr))] md:gap-2">
-          {results.map((r, idx) => (
-            <DayStatus {...r} key={r.day} />
+          {results.map((r) => (
+            <Suspense
+              key={r.day}
+              fallback={<div className={`rounded-lg h-6 w-6 bg-base-200`} />}
+            >
+              <DayStatus {...r} />
+            </Suspense>
           ))}
         </div>
       </div>
