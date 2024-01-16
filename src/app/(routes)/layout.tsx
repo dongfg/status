@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -10,11 +10,14 @@ export const metadata: Metadata = {
   description: "Personal Status Page",
   generator: "Next.js",
   manifest: "/manifest.json",
-  themeColor: [{ media: "(prefers-color-scheme: light)", color: "#00a96f" }],
   icons: [
     { rel: "apple-touch-icon", url: "icons/128x128.png" },
     { rel: "icon", url: "icons/128x128.png" },
   ],
+};
+
+export const viewport: Viewport = {
+  themeColor: [{ media: "(prefers-color-scheme: light)", color: "#00a96f" }],
 };
 
 export default function RootLayout({
