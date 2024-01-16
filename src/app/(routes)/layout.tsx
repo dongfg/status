@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description: "Personal Status Page",
   generator: "Next.js",
   manifest: "/manifest.json",
+  themeColor: [{ media: "(prefers-color-scheme: light)", color: "#00a96f" }],
   icons: [
     { rel: "apple-touch-icon", url: "icons/icon-128x128.png" },
     { rel: "icon", url: "icons/icon-128x128.png" },
