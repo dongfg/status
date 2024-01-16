@@ -1,6 +1,6 @@
 {
   "name": "status",
-  "version": "24.1.18",
+  "version": "24.1.19",
   "private": true,
   "scripts": {
     "dev": "next dev",
