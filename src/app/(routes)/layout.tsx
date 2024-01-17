@@ -27,6 +27,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="light">
+      <head>
+        <script async src="pwacompat.min.js"></script>
+      </head>
       <body className={inter.className}>
         {children}
         <SpeedInsights />
