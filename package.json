@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@magicbell/magicbell-react": "^10.9.11",
     "@vercel/postgres": "^0.5.1",
     "@vercel/speed-insights": "^1.0.3",
     "next": "14.0.4",

@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import StatusGroup from "./_components/StatusGroup";
 import Footer from "./_components/Footer";
 import Actions from "./_components/Actions";
+import Notification from "./_components/Notification";
 import { queryEndpoints } from "@/service/query";
 
 // revalidate the data at most half hour
@@ -37,6 +38,12 @@ export default async function Index() {
       >
         {/* client side component */}
         <Actions />
+      </Suspense>
+      <Suspense
+        fallback={<span className="loading loading-infinity loading-xs"></span>}
+      >
+        {/* client side component */}
+        <Notification />
       </Suspense>
       <Footer />
     </main>
