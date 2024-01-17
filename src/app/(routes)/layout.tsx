@@ -10,6 +10,11 @@ export const metadata: Metadata = {
   description: "Personal Status Page",
   generator: "Next.js",
   manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    title: "Status Page",
+    startupImage: "icons/splash.png",
+  },
   icons: [
     { rel: "apple-touch-icon", url: "icons/128x128.png" },
     { rel: "icon", url: "icons/128x128.png" },
