@@ -1,6 +1,6 @@
 {
   "name": "status",
-  "version": "24.1.22",
+  "version": "24.1.23",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@magicbell/magicbell-react": "^10.9.11",
     "@vercel/postgres": "^0.5.1",
     "@vercel/speed-insights": "^1.0.3",
     "next": "14.0.4",
