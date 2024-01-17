@@ -19,11 +19,11 @@ export default async function Index() {
       >
         <PullToRefresh />
       </Suspense>
-      <div className="min-h-full min-w-full flex flex-col items-center space-y-4 py-4 md:py-12">
+      <div className="min-h-full min-w-full flex flex-col items-center space-y-4 md:py-12">
         <StatusGroup name="Site Status" endpoints={endpoints || []} />
       </div>
       <video
-        className="fixed right-0 bottom-0 min-w-full min-h-full -z-1 object-cover"
+        className="fixed right-0 bottom-0 min-w-full min-h-full -z-1 object-cover hidden md:block"
         autoPlay
         muted
         loop
