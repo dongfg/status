@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   icons: [
     { rel: "apple-touch-icon", url: "icons/128x128.png" },
     { rel: "icon", url: "icons/128x128.png" },
+    { rel: "apple-touch-startup-image", url: "icons/splash.png" },
   ],
 };
 
@@ -27,9 +28,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="light">
-      <head>
-        <script async src="pwacompat.min.js"></script>
-      </head>
       <body className={inter.className}>
         {children}
         <SpeedInsights />
