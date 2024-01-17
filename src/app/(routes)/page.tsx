@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import StatusGroup from "./_components/StatusGroup";
 import Footer from "./_components/Footer";
 import Actions from "./_components/Actions";
+import PullToRefresh from "./_components/PullToRefresh";
 import { queryEndpoints } from "@/service/query";
 
 // revalidate the data at most half hour
@@ -13,6 +14,11 @@ export default async function Index() {
   const endpoints = await queryEndpoints();
   return (
     <main className="font-mono relative min-h-screen min-w-full flex flex-col justify-between items-center">
+      <Suspense
+        fallback={<span className="loading loading-infinity loading-xs"></span>}
+      >
+        <PullToRefresh />
+      </Suspense>
       <div className="min-h-full min-w-full flex flex-col items-center space-y-4 py-4 md:py-12">
         <StatusGroup name="Site Status" endpoints={endpoints || []} />
       </div>
