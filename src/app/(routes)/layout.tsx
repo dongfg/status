@@ -10,6 +10,14 @@ export const metadata: Metadata = {
   description: "Personal Status Page",
   generator: "Next.js",
   manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    title: "Status Page",
+    startupImage: {
+      url: "icons/splash.png",
+      media: "(orientation: portrait)",
+    },
+  },
   icons: [
     { rel: "apple-touch-icon", url: "icons/128x128.png" },
     { rel: "icon", url: "icons/128x128.png" },
@@ -27,9 +35,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="light">
-      <head>
-        <script async src="pwacompat.min.js"></script>
-      </head>
       <body className={inter.className}>
         {children}
         <SpeedInsights />
