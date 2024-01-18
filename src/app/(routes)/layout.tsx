@@ -6,22 +6,10 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Status Page",
-  description: "Personal Status Page",
+  title: "状态页",
+  description: "状态页",
   generator: "Next.js",
   manifest: "/manifest.json",
-  appleWebApp: {
-    capable: true,
-    title: "Status Page",
-    startupImage: {
-      url: "/splash.png",
-      media: "(orientation: portrait)",
-    },
-  },
-  icons: [
-    { rel: "apple-touch-icon", url: "icons/128x128.png" },
-    { rel: "icon", url: "icons/128x128.png" },
-  ],
 };
 
 export const viewport: Viewport = {
@@ -35,6 +23,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="light">
+      <head>
+        {/* splash screen 使用 manifest.json 中 maskable 的图片拼合 */}
+        <script async src="pwacompat.min.js"></script>
+      </head>
       <body className={inter.className}>
         {children}
         <SpeedInsights />
