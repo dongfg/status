@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     capable: true,
     title: "Status Page",
     startupImage: {
-      url: "icons/splash.png",
+      url: "/splash.png",
       media: "(orientation: portrait)",
     },
   },
