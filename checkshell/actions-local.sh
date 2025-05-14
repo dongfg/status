@@ -4,7 +4,7 @@ export TZ='Asia/Shanghai'
 
 # 检查是否有仓库。
 if [ ! -d "./knloop-service-status/" ]; then
-    git clone git@github.com:shadowqcom/knloop-service-status.git
+    git clone git@github.com:dongfg/status.git
 fi
 
 cd ./knloop-service-status/
@@ -68,7 +68,7 @@ for key in "${KEYSARRAY[@]}"; do
 
     # 将排序后的行追加到主日志文件中
     cat "./tmp/logs/${key}_report.log.sorted" >> "./logs/${key}_report.log"
-    
+
     # 清理临时文件
     rm -f "./tmp/logs/${key}_report.log.tmp"
     rm -f "./logs/${key}_report.log.new"

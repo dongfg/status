@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-  <title>knloop status</title>
+  <title>Service Status</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="keywords" content="knloop Service Status 服务状态监测页面" />
+  <meta name="keywords" content="Service Status 服务状态监测页面" />
   <meta name="description" content="使用 Github Actions 每10分钟记录一次服务状态日志,并使用 GitHub Pages 进行页面展示。" />
   <link rel="icon" href="./public/favicon.ico" />
   <link rel="stylesheet" href="./src/index.css" />
@@ -18,11 +18,11 @@
       <div class="headerleft">
         <a href="/">
           <img src="./public/logo.svg" alt="Logo" loading="eager" />
-          <span>knloop sta</span>
+          <span>Service Status</span>
         </a>
       </div>
       <div class="headerright">
-        <a href="https://github.com/shadowqcom/knloop-service-status" rel="nofollow" target="_blank"
+        <a href="https://github.com/dongfg/status" rel="nofollow" target="_blank"
           class="stars-on-github-btn inline-flex justify-center items-center">
           <span>Github</span>
           <svg viewBox="0 0 24 24" width="1.2em" height="1.2em">
@@ -39,7 +39,7 @@
     <span id="lastDayStatus">
       <img id="statusImg" class="statusImg icobeat" src="./public/check/nodata.svg" alt="status" loading="eager" />
     </span>
-    <h1 class="hero-title is-revealing"> knloop service status </h1>
+    <h1 class="hero-title is-revealing"> Service Status </h1>
     <p class="lastUpdatedTime is-revealing" id="updateTime">last updated on: Loading...</p>
   </div>
 
@@ -78,15 +78,15 @@
     <p><span id="uag">UA : $uag</span></p>
   </div>
 
-  <footer>
+  <!-- <footer>
     <p>
       <a href="https://knloop.com">knloop</a> service status. code on
-      <a href="https://github.com/shadowqcom/knloop-service-status">Github</a>
+      <a href="https://github.com/dongfg/status">Github</a>
     </p>
     <p class="copy-right">
       Copyright ©<span id="currentYear"></span> knloop. All Rights Reserved.
     </p>
-  </footer>
+  </footer> -->
 </body>
 
 <script src="./src/js/scrollreveal.min.js"></script>
