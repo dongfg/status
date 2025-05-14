@@ -4,14 +4,10 @@ main:
       imports: https://cnb.cool/dongfg/envs/-/blob/main/github.yaml
       stages:
         - name: Service Check Hourly
-          script: bash ./checkshell/servicecheck.sh
-        - name: Commit and push changes
-          script: bash ./checkshell/cnb-commit.sh
+          script: bash ./checkshell/cnb-run.sh
   web_trigger_check:
     - name: service_check_manually
       imports: https://cnb.cool/dongfg/envs/-/blob/main/github.yaml
       stages:
         - name: Service Check Manually
-          script: bash ./checkshell/servicecheck.sh
-        - name: Commit and push changes
-          script: bash ./checkshell/cnb-commit.sh
+          script: bash ./checkshell/cnb-run.sh
