@@ -1,29 +1,17 @@
 main:
   "crontab: 0 * * * *":
     - name: service_check_hourly
+      imports: https://cnb.cool/dongfg/envs/-/blob/main/github.yml
       stages:
         - name: Service Check Hourly
-          script: |
-            chmod +x ./checkshell/servicecheck.sh
-            bash ./checkshell/servicecheck.sh
+          script: bash ./checkshell/servicecheck.sh
         - name: Commit and push changes
-          script: |
-            git config --local user.name "$CNB_COMMITTER"
-            git config --local user.email "$CNB_COMMITTER_EMAIL"
-            git add -A --force ./logs/
-            git commit -m '🆙 [Automated] Update service status logs'
-            git push origin page
+          script: bash ./checkshell/cnb-commit.sh
   web_trigger_check:
     - name: service_check_manually
+      imports: https://cnb.cool/dongfg/envs/-/blob/main/github.yml
       stages:
         - name: Service Check Manually
-          script: |
-            chmod +x ./checkshell/servicecheck.sh
-            bash ./checkshell/servicecheck.sh
+          script: bash ./checkshell/servicecheck.sh
         - name: Commit and push changes
-          script: |
-            git config --local user.name "$CNB_COMMITTER"
-            git config --local user.email "$CNB_COMMITTER_EMAIL"
-            git add -A --force ./logs/
-            git commit -m '🆙 [Automated] Update service status logs'
-            git push origin page
+          script: bash ./checkshell/cnb-commit.sh
