@@ -3,11 +3,19 @@ main:
     - name: service_check_hourly
       imports: https://cnb.cool/dongfg/envs/-/blob/main/github.yaml
       stages:
+        - name: Switch to Page Branch
+          script: git fetch && git switch page
         - name: Service Check Hourly
+          script: bash ./checkshell/servicecheck.sh
+        - name: Commit Logs
           script: bash ./checkshell/cnb-run.sh
   web_trigger_check:
     - name: service_check_manually
       imports: https://cnb.cool/dongfg/envs/-/blob/main/github.yaml
       stages:
-        - name: Service Check Manually
+        - name: Switch to Page Branch
+          script: git fetch && git switch page
+        - name: Service Check Hourly
+          script: bash ./checkshell/servicecheck.sh
+        - name: Commit Logs
           script: bash ./checkshell/cnb-run.sh
