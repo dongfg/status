@@ -2,7 +2,7 @@
 
 git fetch
 git switch page
-bash servicecheck.sh
+. ${0%/*}/servicecheck.sh
 git config --local user.name "$CNB_COMMITTER"
 git config --local user.email "$CNB_COMMITTER_EMAIL"
 git add -A --force ./logs/
