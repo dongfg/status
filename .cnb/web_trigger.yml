@@ -2,4 +2,4 @@ branch:
   - reg: "main"
     buttons:
       - name: 状态检查
-        event: service_check
+        event: web_trigger_check
