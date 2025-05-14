@@ -1,5 +1,5 @@
 main:
-  "crontab: 0 * * * *":
+  "crontab: */5 * * * *":
     - name: service_check_hourly
       imports: https://cnb.cool/dongfg/envs/-/blob/main/github.yaml
       stages:
