@@ -8,7 +8,6 @@ main:
             bash ./checkshell/servicecheck.sh
         - name: Commit and push changes
           script: |
-            git checkout page
             git config --local user.name "$CNB_COMMITTER"
             git config --local user.email "$CNB_COMMITTER_EMAIL"
             git add -A --force ./logs/
@@ -23,7 +22,6 @@ main:
             bash ./checkshell/servicecheck.sh
         - name: Commit and push changes
           script: |
-            git checkout page
             git config --local user.name "$CNB_COMMITTER"
             git config --local user.email "$CNB_COMMITTER_EMAIL"
             git add -A --force ./logs/
