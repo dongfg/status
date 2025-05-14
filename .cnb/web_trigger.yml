@@ -1,0 +1,5 @@
+branch:
+  - reg: "main"
+    buttons:
+      - name: 状态检查
+        event: web_trigger_check
