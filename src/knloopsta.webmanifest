@@ -1,6 +1,6 @@
 {
   "name": "Service Status",
-  "short_name": "knloop",
+  "short_name": "status",
   "start_url": "/index.html",
   "description": "零依赖的状态页。",
   "display": "standalone",

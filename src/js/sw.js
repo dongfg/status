@@ -32,20 +32,13 @@ self.addEventListener('install', function (event) {
         '/public/check/success.svg',
 
         // 本地日志
-        '/logs/Web_report.log',
-        '/logs/Dev_report.log',
-        '/logs/Mojocn_report.log',
-        '/logs/Mojoo_report.log',
-        '/logs/ShadowQ_report.log',
-        '/logs/Google_report.log',
+        '/logs/Blog_report.log',
+        '/logs/Wiki_report.log',
+
 
         // 网络资源
-        'https://raw.github.knloop.com/knloop-service-status/page/logs/Web_report.log',
-        'https://raw.github.knloop.com/knloop-service-status/page/logs/Dev_report.log',
-        'https://raw.github.knloop.com/knloop-service-status/page/logs/Mojocn_report.log',
-        'https://raw.github.knloop.com/knloop-service-status/page/logs/Mojoo_report.log',
-        'https://raw.github.knloop.com/knloop-service-status/page/logs/ShadowQ_report.log',
-        'https://raw.github.knloop.com/knloop-service-status/page/logs/Google_report.log'
+        'https://raw.githubusercontent.com/dongfg/status/page/logs/Blog_report.log',
+        'https://raw.githubusercontent.com/dongfg/status/page/logs/Wiki_report.log',
       ]);
     })
   );

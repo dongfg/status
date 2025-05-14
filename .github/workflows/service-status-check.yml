@@ -35,8 +35,8 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config --local user.name 'Github Actions'
-          git config --local user.email 'Actions@knloop.com'
+          git config --local user.name "${{ github.actor }}"
+          git config --local user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
           git add -A --force ./logs/
           git commit -m '🆙 [Automated] Update service status logs'
           git push origin page
