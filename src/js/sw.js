@@ -34,11 +34,15 @@ self.addEventListener('install', function (event) {
         // 本地日志
         '/logs/Blog_report.log',
         '/logs/Wiki_report.log',
+        '/logs/Vaultwarden_report.log',
+        '/logs/Config_report.log',
 
 
         // 网络资源
         'https://raw.githubusercontent.com/dongfg/status/page/logs/Blog_report.log',
         'https://raw.githubusercontent.com/dongfg/status/page/logs/Wiki_report.log',
+        'https://raw.githubusercontent.com/dongfg/status/page/logs/Vaultwarden_report.log',
+        'https://raw.githubusercontent.com/dongfg/status/page/logs/Config_report.log',
       ]);
     })
   );
